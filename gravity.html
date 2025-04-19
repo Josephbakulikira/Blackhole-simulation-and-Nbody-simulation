@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>gravity</title>
+    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Space+Grotesk:wght@300..700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <canvas class="my_canvas"> </canvas>
+      <div class="parameter_panel">
+        <h3>PARAMETERS</h3>
+        <hr/>
+        <input type="range" min="1" max="1000" step="1" value="150" class="input-slider" id="slider-scalar"/>
+      </div>
+
+      <div class="display_none" id="popupcontainer">
+        <div class="new_body_popup">
+            <h3>NEW BODY</h3>
+            <hr class="h-line"/>
+            <br/>
+            <div>
+                <input type="number" placeholder="x" id="x-pos"/>
+                <input type="number" placeholder="y" id="y-pos"/>
+            </div>
+            <div>
+                <input type="number" placeholder="x vel" id="x-vel"/>
+                <input type="number" placeholder="y vel" id="y-vel"/>
+            </div>
+            <div>
+                <input type="number" placeholder="Force" id="force"/>
+                <input type="color" value="#ffffff" placeholder="color" id="color"/>
+            </div>
+            <br/>
+            <hr class="h-line"/>
+
+            
+            <button class="add_body_button" id="addbutton">Add Body</button>
+          </div>
+      </div>
+    </div>
+
+    <script type="module" src="./js/app.js"></script>
+    <script type="module" src="./js/utils.js"></script>
+    <script type="module" src="./js/constants.js"></script>
+  </body>
+</html>
