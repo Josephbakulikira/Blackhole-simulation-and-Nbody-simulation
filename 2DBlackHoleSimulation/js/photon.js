@@ -1,12 +1,8 @@
-import { C, G, TRAIL_LIMIT } from "./constants.js";
+import { C, colors, G, TRAIL_LIMIT } from "./constants.js";
 
 function getRandomColor() {
-    var letters = '0123456789ABCDEF';
-    var color = '#';
-    for (var i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
+    var rndI = Math.round(Math.random() * (colors.length - 0) + 0);
+    return colors[rndI];
 }
 
 export default class Photon{
@@ -22,10 +18,11 @@ export default class Photon{
         this.fy = fy;
 
         this.mass = 0;
-        // this.color = getRandomColor();
-        this.color = "orange"
+        this.color = getRandomColor();
+        this.trailColor = getRandomColor();
+        // this.color = "purple"
         // this.radius = this.mass * RADIUS_FACTOR
-        this.radius = 2;
+        this.radius = 5;
         this.trail = [[x, y]]
         this.trapped = false;
     }
@@ -96,20 +93,18 @@ export default class Photon{
         // });
 
         // ctx.lineWidth =2;
-        // ctx.strokeStyle = this.color;
+        // ctx.strokeStyle = this.trailC;
         // ctx.fillStyle = "";
         // ctx.shadowColor=this.color;
         // ctx.shadowOffsetX = 0;
         // ctx.shadowOffsetY = 0;
         // ctx.shadowBlur= 10;
-        ctx.stroke();
-        
+        // ctx.stroke();
+        // ctx.fill();
         // DRAW THE BODY/CIRCLE
         ctx.beginPath();
         ctx.arc((this.x), (this.y), this.radius, 0, Math.PI * 2, false);
         ctx.fillStyle=this.color;
-
-    
         ctx.strokeStyle = this.color;
         ctx.lineWidth = 10;
         // ctx.shadowColor=this.color;
