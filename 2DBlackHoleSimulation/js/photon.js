@@ -6,16 +6,13 @@ function getRandomColor() {
 }
 
 export default class Photon{
-    constructor(x, y, vx, vy, fx=0, fy=0){
+    constructor(x, y, vx, vy){
         // position
         this.x = x;
         this.y = y;
         // velocity
         this.vx = vx;
         this.vy = vy;
-        // force
-        this.fx = fx;
-        this.fy = fy;
 
         this.mass = 0;
         this.color = getRandomColor();
@@ -25,42 +22,6 @@ export default class Photon{
         this.radius = 5;
         this.trail = [[x, y]]
         this.trapped = false;
-    }
-
-    updateVelocity(bh, dt){
-        this.fx = 0;
-        this.fy = 0;
-        // G * m1 * m2 / R^2
-        
-        // // G * m1 * m2
-        let numerator = G * bh.mass;
-        // console.log(numerator)
-        // Diff the two bodies
-        let dx = (bh.x - this.x);
-        let dy = (bh.y - this.y);
-        // getting the distance ====> R
-        let distance = Math.sqrt(dx*dx+ dy*dy);  
-        // // computing the force
-        let force = numerator / (distance * distance);
-        //normalize the diff vector
-        this.fx = force * dx / (distance);
-        this.fy = force * dy / (distance);
-        
-        this.vx += this.fx * dt;
-        this.vy += this.fy * dt;
-
-        // normalize velocity
-        let magg = Math.sqrt(this.vx * this.vx + this.vy * this.vy)
-
-        if(magg > C){
-            this.vx = (this.vx / magg) * C;
-            this.vy = (this.vy / magg) * C;
-        }
-
-        if(distance < bh.rs){
-            // console.log(bh.rs)
-            // this.trapped = true
-        }
     }
 
     updatePosition(ctx, dt){
@@ -75,38 +36,35 @@ export default class Photon{
             }
         }
 
-        // this.fx = 0;
-        // this.fy = 0;
-        
         this.draw(ctx);
     }
 
     draw(ctx){
         // DRAW THE TRAIL
-        // ctx.beginPath();
+        ctx.beginPath();
 
-        // ctx.moveTo((this.trail[0][0]), (this.trail[0][1]));
+        ctx.moveTo((this.trail[0][0]), (this.trail[0][1]));
 
-        // this.trail.forEach((point, index) => {
-        //     if ( index != 0)
-        //         ctx.lineTo(point[0], point[1]);            
-        // });
+        this.trail.forEach((point, index) => {
+            if ( index != 0)
+                ctx.lineTo(point[0], point[1]);            
+        });
 
-        // ctx.lineWidth =2;
+        ctx.lineWidth =1;
         // ctx.strokeStyle = this.trailC;
         // ctx.fillStyle = "";
         // ctx.shadowColor=this.color;
         // ctx.shadowOffsetX = 0;
         // ctx.shadowOffsetY = 0;
         // ctx.shadowBlur= 10;
-        // ctx.stroke();
+        ctx.stroke();
         // ctx.fill();
         // DRAW THE BODY/CIRCLE
         ctx.beginPath();
         ctx.arc((this.x), (this.y), this.radius, 0, Math.PI * 2, false);
         ctx.fillStyle=this.color;
-        ctx.strokeStyle = this.color;
-        ctx.lineWidth = 10;
+        // ctx.strokeStyle = this.color;
+        // ctx.lineWidth = 10;
         // ctx.shadowColor=this.color;
         // ctx.shadowOffsetX = 0;
         // ctx.shadowOffsetY = 0;

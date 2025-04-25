@@ -15,10 +15,11 @@ const midY = canvas.height/2;
 
 
 const M87 = new BlackHole(midX, midY, 0, 0, Rs, M)
+console.log(Rs, M)
 
 let photons = []
 let n_photons = 200;
-// let dist_between = 10;
+let dist_between = 10;
 let initial_speed = -C;
 
 for(let i = 0; i < n_photons; i++){
@@ -87,18 +88,20 @@ function loop(now) {
 
         if (elapsed > requiredElapsed) {
             //clear the background
-            ctx.fillStyle = 'rgba(40, 40, 40, 0.02)';
+            ctx.fillStyle = 'rgba(40, 40, 40, 0.1)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             // do stuff
             
             M87.draw(ctx);
 
+            
             photons.forEach(photon => {
-                photon.updateVelocity(M87, delta_time);
-            });
-            photons.forEach(photon => {
+                M87.pull(photon);
                 photon.updatePosition(ctx, delta_time);
+
             });
+            M87.draw(ctx);
+
         }
     }
 }
