@@ -16,7 +16,7 @@ export default class Photon{
 
         this.mass = 0;
         this.color = getRandomColor();
-        this.trailColor = getRandomColor();
+        this.trailColor = "#ffaf88";
         // this.color = "purple"
         // this.radius = this.mass * RADIUS_FACTOR
         this.radius = 5;
@@ -50,26 +50,20 @@ export default class Photon{
                 ctx.lineTo(point[0], point[1]);            
         });
 
-        ctx.lineWidth =1;
-        // ctx.strokeStyle = this.trailC;
-        // ctx.fillStyle = "";
-        // ctx.shadowColor=this.color;
-        // ctx.shadowOffsetX = 0;
-        // ctx.shadowOffsetY = 0;
-        // ctx.shadowBlur= 10;
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = this.trailColor;
+        ctx.fillStyle = this.trailColor;
+        ctx.shadowColor=this.color;
+        ctx.shadowBlur = 0;
         ctx.stroke();
-        // ctx.fill();
         // DRAW THE BODY/CIRCLE
         ctx.beginPath();
         ctx.arc((this.x), (this.y), this.radius, 0, Math.PI * 2, false);
         ctx.fillStyle=this.color;
-        // ctx.strokeStyle = this.color;
-        // ctx.lineWidth = 10;
-        // ctx.shadowColor=this.color;
-        // ctx.shadowOffsetX = 0;
-        // ctx.shadowOffsetY = 0;
-        // ctx.shadowBlur= 20;
+        ctx.shadowColor=this.color;
+        ctx.shadowBlur= 10;
         ctx.fill();
+        ctx.shadowBlur = 0;
         
     }
 }

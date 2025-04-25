@@ -88,7 +88,7 @@ function loop(now) {
 
         if (elapsed > requiredElapsed) {
             //clear the background
-            ctx.fillStyle = 'rgba(40, 40, 40, 0.1)';
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.08)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             // do stuff
             
