@@ -23,6 +23,7 @@ let dist_between = 10;
 let initial_speed = -C;
 
 for(let i = 0; i < n_photons; i++){
+    // Photons coming from the right
     // photons.push(
     //     new Photon(canvas.width, midY - i * dist_between, initial_speed, 0)
     // );

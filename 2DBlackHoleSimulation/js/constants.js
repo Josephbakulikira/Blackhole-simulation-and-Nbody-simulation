@@ -11,7 +11,7 @@
     export const TIME_STEP = 100;
     // console.log(Rs)
 
-    export const TRAIL_LIMIT=50;
+    export const TRAIL_LIMIT=100;
 
     export const colors = [
         // "#03045e",
