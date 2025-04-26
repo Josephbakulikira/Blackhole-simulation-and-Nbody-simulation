@@ -225,7 +225,7 @@ var predefinedSetups = {
       POSITION_SCALAR = 300;
       scalarOutput.innerHTML = 300;
       scalarSlider.value = 300;
-      
+
       TIME_STEP = 10;
       timestepInput.value = 10;
       timestepOutput.innerHTML = 10
@@ -483,7 +483,7 @@ function HandleEvents() {
   playPauseButton.onclick = function(e){
     pause = !pause;
     // console.log(pause);
-    playPauseButton.innerHTML = pause === false ? "⏸️" : "▶️";
+    playPauseButton.innerHTML = pause === false ? "pause" : "play";
     if(pause === false){
         loop()
     }

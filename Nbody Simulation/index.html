@@ -7,15 +7,25 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Space+Grotesk:wght@300..700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
       rel="stylesheet"
     />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
     <!-- custom style -->
     <link rel="stylesheet" href="./css/style.css" />
-    
   </head>
   <body>
     <div class="main-container">
@@ -29,94 +39,156 @@
           <h3>PARAMETERS</h3>
           <i class="fa-solid fa-x" id="close-button"></i>
         </div>
-        <hr/>
+        <hr />
         <div>
           <!-- scalar -->
           <div class="input-container">
             <label>SCALAR</label>
-            <input type="range" min="1" max="1000" step="1" value="150" class="input-slider" id="slider-scalar"/>
+            <input
+              type="range"
+              min="1"
+              max="1000"
+              step="1"
+              value="150"
+              class="input-slider"
+              id="slider-scalar"
+            />
             <output id="scalar-output">150</output>
           </div>
           <!-- background color -->
           <div class="input-container">
             <label>BACKGROUND</label>
-            <input type="color" value="#000000" class="input-slider" id="color-input"/>
+            <input
+              type="color"
+              value="#000000"
+              class="input-slider"
+              id="color-input"
+            />
           </div>
           <!-- timestep -->
           <div class="input-container">
             <label>TIME STEP</label>
-            <input type="number" value="10" class="input-slider" id="timestep-input"/>
+            <input
+              type="number"
+              value="10"
+              class="input-slider"
+              id="timestep-input"
+            />
             <output id="timestep-output">10</output>
           </div>
-           <!-- minimum distance -->
+          <!-- minimum distance -->
           <div class="input-container">
             <label>MIN DISTANCE</label>
-            <input type="range" min="0" max="10" step="0.001" value="0.001" class="input-slider" id="min-distance-input"/>
+            <input
+              type="range"
+              min="0"
+              max="10"
+              step="0.001"
+              value="0.001"
+              class="input-slider"
+              id="min-distance-input"
+            />
             <output id="mindistance-output">0.001</output>
           </div>
           <!-- gravity constant -->
           <div class="input-container">
             <label>GRAVITY</label>
-            <input type="range" min="0" max="1000" step="1" value="1" class="input-slider" id="gravity-input"/>
+            <input
+              type="range"
+              min="0"
+              max="1000"
+              step="1"
+              value="1"
+              class="input-slider"
+              id="gravity-input"
+            />
             <output id="gravity-output">1</output>
           </div>
           <!-- radius factor -->
           <div class="input-container">
             <label>RADIUS</label>
-            <input type="range" min="1" max="100" step="1" value="6" class="input-slider" id="radius-input"/>
+            <input
+              type="range"
+              min="1"
+              max="100"
+              step="1"
+              value="6"
+              class="input-slider"
+              id="radius-input"
+            />
             <output id="radius-output">6</output>
           </div>
           <!-- tail limit -->
           <div class="input-container">
             <label>TAIL LIMIT</label>
-            <input  type="range" min="1" max="1000" step="1" value="100" class="input-slider" id="trail-input"/>
+            <input
+              type="range"
+              min="1"
+              max="1000"
+              step="1"
+              value="100"
+              class="input-slider"
+              id="trail-input"
+            />
             <output id="trail-output">100</output>
           </div>
           <!-- predefined simulation -->
           <div class="input-container">
             <label>SIMULATIONS</label>
-            <select id="simulation" value="figure8">
-            </select>
+            <select id="simulation" value="figure8"></select>
           </div>
           <!-- restart button and pause button -->
-           <div class="buttons-container">
-              <button class="btn" id="playpause">⏸️</button>
-              <button class="btn btn-dark" id="restart">restart</button>
-           </div>
+          <div class="buttons-container">
+            <button class="btn btn-outline-light" id="playpause">pause</button>
+            <button class="btn btn-outline-success" id="restart">
+              restart
+            </button>
+          </div>
+          <hr />
+          <!-- Notes -->
+          <div>
+            <p class="notes-p">Double click to add a body in your simulation</p>
+          </div>
         </div>
       </div>
-      
+
       <!-- ADD BODY POPUP -->
       <div class="display_none" id="popupcontainer">
         <div class="new_body_popup">
-            <h3>NEW BODY</h3>
-            <hr class="h-line"/>
-            <br/>
-            <div>
-                <input type="number" placeholder="x" id="x-pos"/>
-                <input type="number" placeholder="y" id="y-pos"/>
-            </div>
-            <div>
-                <input type="number" placeholder="x vel" id="x-vel"/>
-                <input type="number" placeholder="y vel" id="y-vel"/>
-            </div>
-            <div>
-                <input type="number" placeholder="Force" id="force"/>
-                <input type="color" value="#ffffff" placeholder="color" id="color"/>
-            </div>
-            <br/>
-            <hr class="h-line"/>
-
-            
-            <button class="add_body_button" id="addbutton">Add Body</button>
+          <h3>NEW BODY</h3>
+          <hr class="h-line" />
+          <br />
+          <div>
+            <input type="number" placeholder="x" id="x-pos" />
+            <input type="number" placeholder="y" id="y-pos" />
           </div>
-      </div>
+          <div>
+            <input type="number" placeholder="x vel" id="x-vel" />
+            <input type="number" placeholder="y vel" id="y-vel" />
+          </div>
+          <div>
+            <input type="number" placeholder="Force" id="force" />
+            <input
+              type="color"
+              value="#ffffff"
+              placeholder="color"
+              id="color"
+            />
+          </div>
+          <br />
+          <hr class="h-line" />
 
+          <button class="add_body_button" id="addbutton">Add Body</button>
+        </div>
+      </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+      crossorigin="anonymous"
+    ></script>
     <script type="module" src="./js/app.js"></script>
     <script type="module" src="./js/utils.js"></script>
-
   </body>
 </html>
