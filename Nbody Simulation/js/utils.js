@@ -1,5 +1,3 @@
-import { GRAVITY, MIN_DISTANCE, RADIUS_FACTOR, TRAIL_LIMIT } from "./constants.js";
-
 export class Body {
     constructor(x, y, vx, vy, mass, color, fx=0, fy=0){
         // position
@@ -15,11 +13,11 @@ export class Body {
         this.mass = mass;
         this.color = color;
         // this.radius = this.mass * RADIUS_FACTOR
-        this.radius = RADIUS_FACTOR;
+        this.radius = 1;
         this.trail = []
     }
 
-    updateVelocity(others, dt){
+    updateVelocity(others, dt, GRAVITY, MIN_DISTANCE){
         this.fx = 0;
         this.fy = 0;
         // G * m1 * m2 / R^2
@@ -51,27 +49,26 @@ export class Body {
 
     }
 
-    updatePositon(ctx, midX, midY, dt, position_scalar=1){
+    updatePositon(ctx, midX, midY, dt, TRAIL_LIMIT, RADIUS_FACTOR, position_scalar=1){
         this.x += (this.vx * dt);
         this.y += (this.vy * dt);
 
         this.trail.push([this.x, this.y]);
 
         if(this.trail.length > TRAIL_LIMIT){
-            this.trail = this.trail.slice(1, this.length);
+            this.trail = this.trail.slice(this.trail.length - TRAIL_LIMIT, this.length);
         }
 
         // this.fx = 0;
         // this.fy = 0;
         
-        this.draw(ctx, midX, midY, position_scalar);
+        this.draw(ctx, midX, midY, RADIUS_FACTOR, position_scalar);
     }
 
-    draw(ctx, midX, midY, position_scalar){
+    draw(ctx, midX, midY, RADIUS_FACTOR, position_scalar){
         // DRAW THE TRAIL
         ctx.beginPath();
-
-        ctx.moveTo((this.trail[0][0] * position_scalar) + midX, (this.trail[0][1]* position_scalar) + midY);
+        ctx.moveTo((this.trail[0][0] *  position_scalar) + midX, (this.trail[0][1] * position_scalar) + midY);
 
         this.trail.forEach((point, index) => {
             if ( index != 0)
@@ -89,7 +86,7 @@ export class Body {
         
         // DRAW THE BODY/CIRCLE
         ctx.beginPath();
-        ctx.arc((this.x * position_scalar) + midX, (this.y * position_scalar) + midY, this.radius, 0, Math.PI * 2, false);
+        ctx.arc((this.x * position_scalar) + midX, (this.y * position_scalar) + midY, this.radius * RADIUS_FACTOR, 0, Math.PI * 2, false);
         ctx.fillStyle=this.color;
 
     
@@ -100,6 +97,15 @@ export class Body {
         ctx.shadowOffsetY = 0;
         ctx.shadowBlur= 100;
         ctx.fill();
-        
+        ctx.shadowBlur= 0; 
     }
 }
+
+export function hexToRgb(hex) {
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+      r: parseInt(result[1], 16),
+      g: parseInt(result[2], 16),
+      b: parseInt(result[3], 16)
+    } : null;
+  }
