@@ -142,45 +142,6 @@ vec3 geodesic_equation(vec3 position, float h2){
     return -(3.0/2.0) * h2 * position / pow(length(position), 5.0);
 }
 
-bool compute(inout vec3 position, inout vec3 velocity, inout Ray ray){
-    // check if an object is in the event horizon or not
-    // and perform the integration 
-    // we gonna use the Runge kutta integration , because it's more accurate than euler integration
-
-    // angular momentum constants in the geodesic equation
-    vec3 perpendicular = cross(position, velocity);
-    float mag = length(perpendicular);
-    float h2 = pow(mag, 2.0);
-
-    vec4 color = vec4(1.0);
-
-    for(int i = 0; i < MAX_ITERATIONS; i++){
-        // calculate the distance between the ray and the black hole 
-        // assuming the black hole is at : vec3(0, 0, 0);
-        float dist = length(position); 
-        if(dist >= BACKGROUND_DISTANCE){
-            // return false;
-            return vec4(0.0);
-        }
-        if(dist <= EVENT_HORIZON_RADIUS){
-            // return true;
-            return vec1(0.0);
-        }
-        float step_size = dist * dist * STEP_SIZE;
-        vec3 rk_delta = velocity * step_size;
-
-        // RK-4 = runge-kutta integration
-        vec3 k1 = step_size * geodesic_equation(position, h2);
-        vec3 k2 = step_size * geodesic_equation(position + rk_delta + 0.5 * k1, h2);
-        vec3 k3 = step_size * geodesic_equation(position + rk_delta + 0.5 * k2, h2);
-        vec3 k4 = step_size * geodesic_equation(position + rk_delta + k3, h2);
-
-        position += rk_delta;
-        velocity += (k1 + 2.0 * (k2 + k3) + k4) / 6.0;
-    }
-    return color;
-}
-
 vec4 intersect_sphere(Ray ray, float radius){
     float a = dot(ray.direction, ray.direction);
     float b = dot(ray.direction, ray.origin) * 2.0;
@@ -209,25 +170,78 @@ vec4 GetColor(Ray ray){
     return texture2D(uCanvasTexture, new_coord);
 }
 
+vec4 compute(inout vec3 position, inout vec3 velocity, inout Ray ray){
+    // check if an object is in the event horizon or not
+    // and perform the integration 
+    // we gonna use the Runge kutta integration , because it's more accurate than euler integration
+
+    // angular momentum constants in the geodesic equation
+    vec3 perpendicular = cross(position, velocity);
+    float mag = length(perpendicular);
+    float h2 = pow(mag, 2.0);
+
+    vec4 color = vec4(1.0);
+
+    for(int i = 0; i < MAX_ITERATIONS; i++){
+        // calculate the distance between the ray and the black hole 
+        // assuming the black hole is at : vec3(0, 0, 0);
+        float dist = length(position);
+
+        float step_size = dist * dist * STEP_SIZE;
+        vec3 rk_delta = velocity * step_size;
+
+        // RK-4 = runge-kutta integration
+        vec3 k1 = step_size * geodesic_equation(position, h2);
+        vec3 k2 = step_size * geodesic_equation(position + rk_delta + 0.5 * k1, h2);
+        vec3 k3 = step_size * geodesic_equation(position + rk_delta + 0.5 * k2, h2);
+        vec3 k4 = step_size * geodesic_equation(position + rk_delta + k3, h2);
+
+        vec3 d = (k1 + 2.0 * (k2 + k3) + k4) / 6.0;
+
+        vec3 ray_step = position + rk_delta * step_size;
+        float ray_step_dist = length(ray_step);
+
+        if(dist > 2.0 && dist < 5.0){
+            return vec4(1.0);
+        }
+
+        if(dist >= BACKGROUND_DISTANCE){
+            // return false;
+            // return vec4(1.0, 0.0, 0.0, 1.0);
+            break;
+        }
+        if(dist <= EVENT_HORIZON_RADIUS){
+            // return true;
+            return vec4(0.0, 0.0, 0.0, 1.0);
+        }
+
+        
+        // vec3 ray_step = ray.origin + ray.position * step_size;
+
+        
+        // update the position and velocity
+        position += rk_delta;
+        velocity += d;
+        
+    }
+
+    ray.origin = vec4(position, 1.0);
+    ray.direction = vec4(velocity, 0.0);
+
+    return GetColor(ray);
+}
+
 void main() {
     Ray ray = pixelToWorldRay();
 
     vec3 position = vec3(ray.origin);
     vec3 velocity = SPEED_OF_LIGHT * normalize(vec3(ray.direction));
     
-    bool checker = compute(position, velocity);
-    if(checker){
-        gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
-        return;
-    }
-    
-    ray.origin = vec4(position, 1.0);
-    ray.direction = vec4(velocity, 0.0);
+    vec4 color = compute(position, velocity, ray);
 
-    vec4 pixel_color = GetColor(ray);
+    gl_FragColor = color;
 
     // Set the pixel color
     // gl_FragColor = texture2D(uCanvasTexture, vu);
     // gl_FragColor = vec4(vu.x, vu.y, 0, 1.0);
-    gl_FragColor = pixel_color;
 }
