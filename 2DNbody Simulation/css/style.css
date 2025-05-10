@@ -191,3 +191,33 @@
     /* font-size: 'Courier New', Courier, monospace; */
     font-weight: 600;
 }
+
+
+.github-button {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 8px;
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+    background-color: #141414; /* GitHub Dark Gray */
+    border-radius: 6px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.3s;
+    font-family:monospace;
+    z-index: 9999 !important;
+}
+
+.github-button:hover {
+    background-color: #292929; /* Slightly lighter on hover */
+}
+
+.github-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+}
