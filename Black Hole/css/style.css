@@ -1,4 +1,43 @@
-*{
+* {
     margin: 0;
     padding: 0;
+}
+
+.dg.main .close-button {
+    /*background-color: magenta;*/
+    /*background-color: #f0f;*/
+    background-color: rgb(255, 0, 255);
+}
+
+.dg.main {
+    margin: 20px;
+    /* Adjust margin */
+}
+
+.github-button {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 8px;
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+    background-color: #141414; /* GitHub Dark Gray */
+    border-radius: 6px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.3s;
+    font-family:monospace;
+}
+
+.github-button:hover {
+    background-color: #292929; /* Slightly lighter on hover */
+}
+
+.github-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
 }

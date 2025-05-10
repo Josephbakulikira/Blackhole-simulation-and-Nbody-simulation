@@ -1,29 +1,39 @@
-# define MAX_ITERATIONS 300
 # define SPEED_OF_LIGHT 1.0
 # define EVENT_HORIZON_RADIUS 1.0
 # define BACKGROUND_DISTANCE 10000.0
 # define PROJECTION_DISTANCE 1.0
-# define STEP_SIZE 0.01
 # define SCALE_FACTOR 1.0
 # define PI 3.14159265359
 
-varying vec2 vu;
-
-// uniforms
+// ----------
+// -uniforms-
+// ----------
+uniform float uAccretionDisk;
 uniform sampler2D uCanvasTexture;
 uniform vec2 uResolution;
 uniform vec3 uCameraTranslate;
 uniform float uPov;
+uniform int uMaxIterations;
+uniform float uStepSize;
 
-// variables
+// -----------
+// -variables-
+// -----------
+
 vec3 bh_pos = vec3(0.0, 0.0, 0.0);
-vec3 camera_pos = vec3(0.0, 0.0, 30.0);
+vec3 camera_pos = vec3(0.0, 0.05, 20.0);
+
+float innerDiskRadius = 2.0;
+float outerDiskRadius = 8.0;
+
+float diskFactor = 3.0;
+float disk_flow = 10.0;
+float flow_rate = 0.6;
 
 
 // -----------------
 // MATRIX TRANSFORMS
 // -----------------
-
 mat4 identityMat(){
     return mat4(
         1, 0, 0, 0,
@@ -85,6 +95,47 @@ mat4 rotate_z(float theta){
         0, 0, 1, 0,
         0, 0, 0, 1
     );
+}
+
+// ---------------------------
+// -- FBM -> ACCRETION DISK---
+// ---------------------------
+float hash(float n) { 
+      return fract(sin(n) * 753.5453123); 
+}
+
+float MappingRange(float X, float A, float B, float C, float D){
+    //(X-A)/(B-A) * (D-C) + C
+    return (X - A) / (B - A) * (D - C) + C;
+}
+
+float noise(vec3 x) {
+      vec3 p = floor(x);
+      vec3 f = fract(x);
+      f = f * f * (3.0 - 2.0 * f);
+      float n = p.x + p.y * 157.0 + 113.0 * p.z;
+
+      return mix(mix(mix(hash(n + 0.0), hash(n + 1.0), f.x),
+          mix(hash(n + 157.0), hash(n + 158.0), f.x), f.y),
+          mix(mix(hash(n + 113.0), hash(n + 114.0), f.x),
+          mix(hash(n + 270.0), hash(n + 271.0), f.x), f.y), f.z);
+}
+
+// open this article to learn more about the FBM
+// https://iquilezles.org/articles/fbm/
+float fbm(vec3 pos, const int numOctaves, const float iterScale, const float detail, const float weight) {
+      float mul = weight;
+      float add = 1.0 - 0.5 * mul;
+      float t = noise(pos) * mul + add;
+
+      for (int i = 1; i < numOctaves; ++i) {
+          pos *= iterScale;
+          mul = exp2(log2(weight) - float(i) / detail);
+          add = 1.0 - 0.5 * mul;
+          t *= noise(pos) * mul + add;
+      }
+      
+      return t;
 }
 
 //--------------------------------------------------
@@ -182,12 +233,12 @@ vec4 compute(inout vec3 position, inout vec3 velocity, inout Ray ray){
 
     vec4 color = vec4(1.0);
 
-    for(int i = 0; i < MAX_ITERATIONS; i++){
+    for(int i = 0; i < uMaxIterations; i++){
         // calculate the distance between the ray and the black hole 
         // assuming the black hole is at : vec3(0, 0, 0);
         float dist = length(position);
 
-        float step_size = dist * dist * STEP_SIZE;
+        float step_size = dist * dist * uStepSize;
         vec3 rk_delta = velocity * step_size;
 
         // RK-4 = runge-kutta integration
@@ -198,31 +249,63 @@ vec4 compute(inout vec3 position, inout vec3 velocity, inout Ray ray){
 
         vec3 d = (k1 + 2.0 * (k2 + k3) + k4) / 6.0;
 
-        vec3 ray_step = position + rk_delta * step_size;
+        vec3 ray_step = position + rk_delta + d * uStepSize;
         float ray_step_dist = length(ray_step);
 
-        if(dist > 2.0 && dist < 5.0){
-            return vec4(1.0);
+        if(uAccretionDisk == 1.0 && dist > innerDiskRadius && dist < outerDiskRadius && ray_step.y * position.y < pow(uStepSize, diskFactor)){
+            // ---------------------------------------
+            // --------- ACCRETION DISK --------------
+            // ---------------------------------------
+            float deltaDiskRadius = outerDiskRadius - innerDiskRadius;
+            float disk_dist = dist - innerDiskRadius;
+            vec3 uvw = vec3( 
+                (atan(ray_step.z, abs(ray_step.x)) / (PI * 2.0)) - 
+                (disk_flow / sqrt(dist)),
+
+                pow(disk_dist / deltaDiskRadius, 2.0) + ((flow_rate / (PI * 2.0)) / deltaDiskRadius),
+
+                ray_step.y * 0.5 + 0.5
+            ) / 2.0;
+            float disk_intensity = 1.0 - length(ray_step / vec3(outerDiskRadius, 1.0, outerDiskRadius));
+            disk_intensity *= smoothstep(innerDiskRadius, innerDiskRadius + 1.0, dist);
+            uvw.y += uCameraTranslate.x;
+            uvw.z += uCameraTranslate.x;
+            uvw.x -= uCameraTranslate.x;
+
+            // float density_variation = fbm(2.0 * uvw, 5, 2.0, 1.0, 1.0);
+            float density_variation = fbm(position + uvw * 2.0, 3, 3.0, 1.2, 1.0);
+            disk_intensity *= inversesqrt(dist) * density_variation;
+            float dpth = step_size * (float(uMaxIterations) / 10.0) * disk_intensity;
+            
+            // -------> Doppler Shift
+            vec3 shiftD = 0.6 * cross(normalize(ray_step), vec3(0.0, 1.0, 0.0));
+            float v = dot(ray.direction.xyz, shiftD);
+            float dopplerShift = sqrt((1.0 - v)/(1.0 + v));
+            // -------> Gravitational Shift (Redshit)
+            float redshift = sqrt((1.0 - 2.0 / dist) / (1.0 - 2.0 / length(camera_pos)));
+            
+            vec3 color_rgb = vec3(1.0, 0.65, 0.50) * dopplerShift * redshift * dpth ;
+
+            ray.origin = vec4(position, 1.0);
+            ray.direction = vec4(velocity, 0.0);
+
+            // Blending the accretion disk with the background
+            vec4 disk_color = GetColor(ray) + vec4(color_rgb, 1.0);
+
+            return disk_color;
         }
 
         if(dist >= BACKGROUND_DISTANCE){
-            // return false;
-            // return vec4(1.0, 0.0, 0.0, 1.0);
             break;
         }
+        // In case the ray falls in the event horizon
         if(dist <= EVENT_HORIZON_RADIUS){
             // return true;
             return vec4(0.0, 0.0, 0.0, 1.0);
         }
-
-        
-        // vec3 ray_step = ray.origin + ray.position * step_size;
-
-        
         // update the position and velocity
         position += rk_delta;
         velocity += d;
-        
     }
 
     ray.origin = vec4(position, 1.0);
@@ -239,9 +322,9 @@ void main() {
     
     vec4 color = compute(position, velocity, ray);
 
-    gl_FragColor = color;
+    //glow value
+    float glow = 0.01/length(ray.origin);
+    glow = clamp(glow, 0.0, 1.0) * 12.0;
 
-    // Set the pixel color
-    // gl_FragColor = texture2D(uCanvasTexture, vu);
-    // gl_FragColor = vec4(vu.x, vu.y, 0, 1.0);
+    gl_FragColor = color + glow;
 }
