@@ -29,6 +29,7 @@ Whether you're a student, a physicist, or a curious developer, this project prov
 ---
 ## 📂 Folder Structure
 
+```
 black-hole-simulation/
 │
 ├── BlackHole/ # 🌌 Main 3D black hole simulation with control panel
@@ -39,6 +40,7 @@ black-hole-simulation/
 │
 ├── TwoDBlackHole/ # 🌀 2D simulation of black hole effects
 └── README.md # 📘 Project documentation
+```
 
 ---
 
@@ -84,14 +86,12 @@ Simulates frame dragging and accretion disk visuals
 Parameter panel gives real-time control
 
 ✅ 2D Black Hole
-Radial force simulation
-
 Great for understanding curved space in a simpler setting
 
 ✅ N-Body Simulations
 Figure-Eight: A known periodic solution to the 3-body problem
-
 Chaos: Demonstrates sensitivity to initial conditions and nonlinear behavior
+
 <img src="https://i.ibb.co/bnYx7S9/Screenshot-2025-05-11-015511.png" alt="Screenshot-2025-05-11-015511" border="0"></a><a href="https://ibb.co/Kxf9Jk9W"><img src="https://i.ibb.co/Kxf9Jk9W/Screenshot-2025-05-11-015543.png" alt="Screenshot-2025-05-11-015543" border="0"></a><a href="https://ibb.co/Q36qhmw4"><img src="https://i.ibb.co/Q36qhmw4/Screenshot-2025-05-11-015608.png" alt="Screenshot-2025-05-11-015608" border="0"></a><a href="https://ibb.co/Y79SmjVp"><img src="https://i.ibb.co/zVFZf1LR/Screenshot-2025-05-11-015458.png" alt="Screenshot-2025-05-11-015458" border="0"></a> <a href="https://ibb.co/bgwYqsVx">
 
 ### 🧩 Technologies Used
