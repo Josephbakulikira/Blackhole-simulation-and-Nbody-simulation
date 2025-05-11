@@ -38,7 +38,7 @@ black-hole-simulation/
 │ ├── FigureEight/ # 🧊 Periodic 3-body problem: figure-eight path
 │ └── Chaos/ # 💥 Chaotic orbit simulation
 │
-├── TwoDBlackHole/ # 🌀 2D simulation of black hole effects
+├── 2DBlackHole/ # 🌀 2D simulation of black hole effects
 └── README.md # 📘 Project documentation
 ```
 
