@@ -1,10 +1,9 @@
 <a href="https://ibb.co/KjcYXH08"><img src="https://i.ibb.co/KjcYXH08/Screenshot-2025-05-08-161832.png" alt="Screenshot-2025-05-08-161832" border="0"></a> <a href="https://ibb.co/bnYx7S9"><img src="https://i.ibb.co/Df6ZmFYs/Screenshot-2025-05-11-015702.png" alt="Screenshot-2025-05-11-015702" border="0"></a> <a href="https://ibb.co/dwZGTLX8"><img src="https://i.ibb.co/dwZGTLX8/Screenshot-2025-05-11-015911.png" alt="Screenshot-2025-05-11-015911" border="0"></a> <a href="https://ibb.co/5xR2gv30"><img src="https://i.ibb.co/5xR2gv30/Screenshot-2025-05-11-015946.png" alt="Screenshot-2025-05-11-015946" border="0"></a> <a href="https://ibb.co/LdMbrCx6"><img src="https://i.ibb.co/LdMbrCx6/Screenshot-2025-05-11-020006.png" alt="Screenshot-2025-05-11-020006" border="0"></a> <a href="https://ibb.co/hRTRNkSv"><img src="https://i.ibb.co/hRTRNkSv/Screenshot-2025-05-11-020109.png" alt="Screenshot-2025-05-11-020109" border="0"></a><a href="https://ibb.co/Fkm3kfGN"><img src="https://i.ibb.co/Fkm3kfGN/Screenshot-701.png" alt="Screenshot-701" border="0"></a> <a href="https://ibb.co/zVFZf1LR"><img src="https://i.ibb.co/zVFZf1LR/Screenshot-2025-05-11-015458.png" alt="Screenshot-2025-05-11-015458" border="0"></a> <a href="https://ibb.co/bgwYqsVx"><img src="https://i.ibb.co/bgwYqsVx/Screenshot-694.png" alt="Screenshot-694" border="0"></a>
 
 <p align='center'>
-[![Black hole simulation GIF Auctux](https://i.ibb.co/1tdjPR9f/clideo-editor-b37ea9242f204371b1e94f6e7148c774.gif "Black hole simulation GIF Auctux")](https://i.ibb.co/1tdjPR9f/clideo-editor-b37ea9242f204371b1e94f6e7148c774.gif "Black hole simulation GIF Auctux")
+<img src="https://i.ibb.co/1tdjPR9f/clideo-editor-b37ea9242f204371b1e94f6e7148c774.gif" alt="black hole gif animation"/>
 </p>
 <h1 align='center'>🌌 Black Hole Simulation</h1>
-
 <p align="center">
   <img src="https://img.shields.io/badge/Project-Black%20Hole%20Sim-blueviolet" />
   <img src="https://img.shields.io/badge/License-MIT-yellow" />
