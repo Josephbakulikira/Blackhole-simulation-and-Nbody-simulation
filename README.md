@@ -38,7 +38,7 @@ black-hole-simulation/
 │ ├── FigureEight/ # 🧊 Periodic 3-body problem: figure-eight path
 │ └── Chaos/ # 💥 Chaotic orbit simulation
 │
-├── 2DBlackHole/ # 🌀 2D simulation of black hole effects
+├── TwoDBlackHole/ # 🌀 2D simulation of black hole effects
 └── README.md # 📘 Project documentation
 ```
 
@@ -117,4 +117,30 @@ Joseph Bakulikira (Auctux)
 🔗[ GitHub](https://github.com/Josephbakulikira " GitHub")
 ▶️[Youtube](https://www.youtube.com/c/Auctux "Youtube")
 
+Here are some useful resources related to black hole simulations and N-body physics:
+### 📺 Project Video
+- Auctux Black hole simulation
+
+### 📚 Research Papers & Articles & Videos
+- [Black hole - blacktracer_IEEEV ](https://pure.tudelft.nl/ws/files/84313235/blacktracer_IEEEVis_final_version.pdf)
+- [A remarkable periodic solution of the three body problem
+in the case of equal masses](https://perso.imcce.fr/alain-chenciner/huit.pdf)
+- [Veritasium Understanding the black hole](https://www.youtube.com/watch?v=zUyH3XhpLTo)
+- [Introduction to Black Hole Physics](https://arxiv.org/abs/1802.04272)
+- [N-Body Simulations: Theory & Applications](https://arxiv.org/abs/1407.4065)
+- [Three-Body Problem & Chaos Theory](https://arxiv.org/abs/1903.08561)
+- [Ray tracing a black hole](https://rantonels.github.io/starless/)
+- https://medium.com/@cadenmarinozzi/simulating-a-schwarzschild-black-hole-part-1-the-background-and-raytracer-7de436a56b7e
+-[Coding train black hole simulation](https://www.youtube.com/watch?v=Iaz9TqYWUmA)
+
+### 🛠 Tools & Libraries
+- [Three.js](https://threejs.org/) - A JavaScript 3D library used for rendering the simulation.
+- [Node.js](https://nodejs.org/) - The runtime environment for executing JavaScript server-side.
+- [Numerical Recipes](http://numerical.recipes/) - A comprehensive source for computational techniques.
+
+
+Feel free to modify or expand this section as needed! 🚀
+
+
 <img src="https://i.ibb.co/Y79SmjVp/Screenshot-2025-05-11-015639.png" alt="Screenshot-2025-05-11-015639" border="0"></a> <a href="https://ibb.co/Df6ZmFYs">
+
